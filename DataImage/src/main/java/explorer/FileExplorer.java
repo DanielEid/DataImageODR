@@ -31,9 +31,9 @@ public class FileExplorer {
         return "FileExplorer{" + "directory='" + directory + '\'' + '}';
     }
 
-    /**
+    /*
      * Function of listing
-     * from https://howtodoinjava.com/java8/java-8-list-all-files-example/#1-listing-files-only-in-a-given-directory
+     *from https://howtodoinjava.com/java8/java-8-list-all-files-example/#1-listing-files-only-in-a-given-directory
      */
 
     public String getAppCurrentPath() {
@@ -41,7 +41,7 @@ public class FileExplorer {
     }
 
     /**
-     * @info: Print the list of files in this. directory
+     * Print the list of files in this. directory
      * Code inspired by part 1.2 of the website
      */
     public void getFilesInOneDirectory() {
@@ -63,10 +63,11 @@ public class FileExplorer {
 
     //Recursive functions
 
-    private void pouet() {
-
-    }
-
+    /**
+     * This function print the list of
+     * @param currentDirectory : Current directory
+     * @// TODO: 25/10/2022
+     */
     public void getFilesInDirectories(String currentDirectory) {
         List<File> fileList = new ArrayList<>();
 
@@ -76,15 +77,17 @@ public class FileExplorer {
                 if (!Files.isDirectory(path)) {
                     fileList.add(path.toFile());
                 }
-                else {  //WARN WHEN EXCEPTION TODO FIX FRER
-                    if(Files.isDirectory(path))
-                        getFilesInDirectories(path.toString());
+                else if (Files.isDirectory(path)) {
+                    getFilesInDirectories(path.toString());
                 }
+                else throw new IOException("Error the program doesn't detect "+ path.toString() + " as a file or a directory");
+                //TODO: Must fix the exceptions control it's not a good way
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         fileList.forEach(System.out::println);
+        //TODO save as file or other
     }
 
 }
