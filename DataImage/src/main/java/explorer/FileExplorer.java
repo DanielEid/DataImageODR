@@ -13,9 +13,11 @@ import java.util.List;
 public class FileExplorer {
 
     private String directory;
+    private final List<String> extentionFile;
 
-    public FileExplorer(String directory) {
+    public FileExplorer(String directory, List<String> extentionFile) {
         this.directory = directory;
+        this.extentionFile = extentionFile;
     }
 
     public String getDirectory() {
@@ -25,6 +27,7 @@ public class FileExplorer {
     public void setDirectory(String directory) {
         this.directory = directory;
     }
+
 
     @Override
     public String toString() {
@@ -64,30 +67,44 @@ public class FileExplorer {
     //Recursive functions
 
     /**
-     * This function print the list of
+     * This function print the list of all file in the current directory and sub-directories
+     * With the given extention
      * @param currentDirectory : Current directory
-     * @// TODO: 25/10/2022
      */
     public void getFilesInDirectories(String currentDirectory) {
-        List<File> fileList = new ArrayList<>();
+        List<File> filesList = new ArrayList<>();
+        List<Path> dirList = new ArrayList<>();
 
         try (DirectoryStream<Path> stream = Files
                 .newDirectoryStream(Paths.get(currentDirectory))) {
             for (Path path : stream) {
                 if (!Files.isDirectory(path)) {
-                    fileList.add(path.toFile());
-                }
-                else if (Files.isDirectory(path)) {
-                    getFilesInDirectories(path.toString());
-                }
-                else throw new IOException("Error the program doesn't detect "+ path.toString() + " as a file or a directory");
+                    if (fileMatchFileType(path)) {
+                        filesList.add(path.toFile());
+                    }
+                } else if (Files.isDirectory(path)) {
+                    dirList.add(path);
+                } else
+                    throw new IOException("Error the program doesn't detect " + path.toString() + " as a file or a directory");
                 //TODO: Must fix the exceptions control it's not a good way
             }
+
+            filesList.forEach(System.out::println);
+            dirList.forEach(index -> getFilesInDirectories(index.toString()));
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        fileList.forEach(System.out::println);
         //TODO save as file or other
+    }
+
+    private boolean fileMatchFileType(Path path) {
+        for (String extention : extentionFile) {
+            if (path.toString().toLowerCase().endsWith(extention)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
