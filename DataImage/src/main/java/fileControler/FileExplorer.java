@@ -1,4 +1,4 @@
-package explorer;
+package fileControler;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class FileExplorer {
@@ -66,12 +65,20 @@ public class FileExplorer {
 
     //Recursive functions
 
+    public void superGet(String sourceDirectory){
+        StringBuilder data = new StringBuilder(); //More efficient than String and concatenation
+        getFilesInDirectories(sourceDirectory,data);
+
+        System.out.println("coyucou");
+        System.out.println(data.toString());
+    }
+
     /**
      * This function print the list of all file in the current directory and sub-directories
      * With the given extention
      * @param currentDirectory : Current directory
      */
-    public void getFilesInDirectories(String currentDirectory) {
+    public void getFilesInDirectories(String currentDirectory, StringBuilder data) { //TODO private
         List<File> filesList = new ArrayList<>();
         List<Path> dirList = new ArrayList<>();
 
@@ -89,8 +96,9 @@ public class FileExplorer {
                 //TODO: Must fix the exceptions control it's not a good way
             }
 
-            filesList.forEach(System.out::println);
-            dirList.forEach(index -> getFilesInDirectories(index.toString()));
+            //filesList.forEach(System.out::println);
+            data.append(filesList);
+            dirList.forEach(index -> getFilesInDirectories(index.toString(),data)); //Call this function (recursive) for each path in this list (directories path)
 
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -16,11 +16,12 @@ public class Main {
 
         //Test File search
         //System.out.println("current path: " + fileExplorer.getAppCurrentPath());
-        //fileExplorer.getFilesInDirectories(fileExplorer.getDirectory());
+       // fileExplorer.getFilesInDirectories(fileExplorer.getDirectory());
+        fileExplorer.superGet(fileExplorer.getDirectory());
 
         //Test file scearch
         // fileEditor.writeStringIntoFile(filePathOfIndexedFilePath,"Coucou bonsoir 2");
-        System.out.println(fileEditor.readDataAsStringFile(filePathOfIndexedFilePath));
+        //System.out.println(fileEditor.readDataAsStringFile(filePathOfIndexedFilePath));
         //TODO fix exception when path is wrong
     }
 }
