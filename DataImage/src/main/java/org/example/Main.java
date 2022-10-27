@@ -1,18 +1,26 @@
 package org.example;
 
-import explorer.FileEditor;
-import explorer.FileExplorer;
+import fileControler.FileEditor;
+import fileControler.FileExplorer;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        FileExplorer fileExplorer = new FileExplorer("C:/Users/Daniel/Videos/Captures", Arrays.asList("png", "jpg"));
-        //TODO test with wrong path
-        new FileEditor().writeStringIntoFile("MonFichier.txt","Coucou bonsoir 2");
+        String filesToBeIndexedPath="C:/Users/Daniel/Videos/Captures";
+        String filePathOfIndexedFilePath="C:/Users/Daniel/Videos/Captures/filesPathIndexed.txt";
+        FileEditor fileEditor = new FileEditor();
 
-        System.out.println("current path: " + fileExplorer.getAppCurrentPath());
-        fileExplorer.getFilesInDirectories(fileExplorer.getDirectory());
+        FileExplorer fileExplorer = new FileExplorer(filesToBeIndexedPath, Arrays.asList("png", "jpg"));
+        //TODO test with wrong path
+
+        //Test File search
+        //System.out.println("current path: " + fileExplorer.getAppCurrentPath());
+        //fileExplorer.getFilesInDirectories(fileExplorer.getDirectory());
+
+        //Test file scearch
+        // fileEditor.writeStringIntoFile(filePathOfIndexedFilePath,"Coucou bonsoir 2");
+        System.out.println(fileEditor.readDataAsStringFile(filePathOfIndexedFilePath));
+        //TODO fix exception when path is wrong
     }
 }
