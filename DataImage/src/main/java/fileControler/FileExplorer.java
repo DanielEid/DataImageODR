@@ -11,6 +11,10 @@ import java.util.List;
 
 public class FileExplorer {
 
+    /**
+     * @param: directory: directory where the function are executed
+     * @param: exntentionFile: List of file extensions on which the file search will be performed
+     */
     private String directory;
     private final List<String> extentionFile;
 
@@ -27,24 +31,23 @@ public class FileExplorer {
         this.directory = directory;
     }
 
-
-    @Override
-    public String toString() {
-        return "FileExplorer{" + "directory='" + directory + '\'' + '}';
+    public List<String> getExtentionFile() {
+        return extentionFile;
     }
 
-    /*
-     * Function of listing
-     *from https://howtodoinjava.com/java8/java-8-list-all-files-example/#1-listing-files-only-in-a-given-directory
+    /**
+     * Show the path where the app are executed
+     * @return the current path of app
      */
-
     public String getAppCurrentPath() {
         return System.getProperty("user.dir");
     }
 
     /**
+     * @deprecated
      * Print the list of files in this. directory
      * Code inspired by part 1.2 of the website
+     * from https://howtodoinjava.com/java8/java-8-list-all-files-example/#1-listing-files-only-in-a-given-directory
      */
     public void getFilesInOneDirectory() {
         List<File> fileList = new ArrayList<>();
@@ -63,23 +66,27 @@ public class FileExplorer {
     }
 
 
-    //Recursive functions
+    /**
+     * This function return the list of all file in the sourcedirectory and sub-directories
+     * With the given extention in
+     * @param  sourceDirectory: directory where the scearch is performed
+     * @return List<File>: List of all file in fileExplorer.directory and sub-directories
+     */
+    public List<File> getFilesInDirectories(String sourceDirectory){
+        List<File> filesList = new ArrayList<>();
+        getRecurviseFilesInDirectories(sourceDirectory,filesList);
 
-    public void superGet(String sourceDirectory){
-        StringBuilder data = new StringBuilder(); //More efficient than String and concatenation
-        getFilesInDirectories(sourceDirectory,data);
-
-        System.out.println("coyucou");
-        System.out.println(data.toString());
+        return filesList;
     }
 
     /**
-     * This function print the list of all file in the current directory and sub-directories
-     * With the given extention
+     * This recursive function save the list of all file in the current directory and sub-directories in a var,
+     * transmits from the function that calls this function. So no return needed
+     * Files are added to the variable if they match the given path and extension
+     * @param  filesList: list where the path's files are saved
      * @param currentDirectory : Current directory
      */
-    public void getFilesInDirectories(String currentDirectory, StringBuilder data) { //TODO private
-        List<File> filesList = new ArrayList<>();
+    private void getRecurviseFilesInDirectories(String currentDirectory, List<File> filesList) {
         List<Path> dirList = new ArrayList<>();
 
         try (DirectoryStream<Path> stream = Files
@@ -95,10 +102,7 @@ public class FileExplorer {
                     throw new IOException("Error the program doesn't detect " + path.toString() + " as a file or a directory");
                 //TODO: Must fix the exceptions control it's not a good way
             }
-
-            //filesList.forEach(System.out::println);
-            data.append(filesList);
-            dirList.forEach(index -> getFilesInDirectories(index.toString(),data)); //Call this function (recursive) for each path in this list (directories path)
+            dirList.forEach(index -> getRecurviseFilesInDirectories(index.toString(),filesList)); //Call this function (recursive) for each path in this list (directories path)
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -106,6 +110,11 @@ public class FileExplorer {
         //TODO save as file or other
     }
 
+    /**
+     * Indicates whether the path contains the desired extension
+     * @param path: path of the file to be tested
+     * @return boolean
+     */
     private boolean fileMatchFileType(Path path) {
         for (String extention : extentionFile) {
             if (path.toString().toLowerCase().endsWith(extention)) {
