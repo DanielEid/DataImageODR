@@ -1,5 +1,6 @@
 package ocrControler;
 
+import ScannedImagesController.ImageScanned;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
@@ -25,8 +26,10 @@ public class TesseractControler {
 
         tesseract.setDatapath(dataPath);
     }
+
     /**
      * Scan and get the text of the image provided
+     *
      * @return the data scanned
      */
     public String getDataScanOneImage(File imagePath) {
@@ -41,31 +44,32 @@ public class TesseractControler {
 
     /**
      * Scan and get the text of the image provided
+     *
      * @return the path of the image and the data scanned
      */
-    public ArrayList<String> getDataScanOneImageAndImageName(File imagePath) {
-        ArrayList<String> imageScanResult = new ArrayList<>();
+    public ImageScanned getDataScanOneImageAsImageScanned(File imagePath) {
+        ImageScanned imageScanned = new ImageScanned();
+        imageScanned.setImageFile(imagePath);
 
-        imageScanResult.add(imagePath.getPath());
         try {
-            imageScanResult.add(tesseract.doOCR(imagePath));
+            imageScanned.setDataScanned(tesseract.doOCR(imagePath));
         } catch (TesseractException e) {
             e.printStackTrace();
         }
-        return imageScanResult;
+        return imageScanned;
     }
 
     /**
      * Scan and get the text of the list images provided
-     * @return a hashmap wich contains the path of the images and the data scanned for each image
+     * @return a list of ImageScanned wich contains the path of the images and the data scanned for each image
      */
-    public HashMap<String, String> getDataScanImagesList(List<File> imagesPath) {
-        HashMap<String, String> imagesScanResult = new HashMap<>();
+    public ArrayList<ImageScanned> getDataScanImagesList(List<File> imagesPath) {
+        ArrayList<ImageScanned> imagesScannedList = new ArrayList<>();
 
         for (int i = 0; /*i<imagesPath.size()*/ i < 2; i++) {                                                  //not foreach loop, I need index
-            imagesScanResult.put(imagesPath.get(i).getPath(), getDataScanOneImage(imagesPath.get(i)));
+            imagesScannedList.add(getDataScanOneImageAsImageScanned(imagesPath.get(i)));
             System.out.println(String.format("%d of %d scanned images", i + 1, imagesPath.size()));
         }
-        return imagesScanResult;
+        return imagesScannedList;
     }
 }

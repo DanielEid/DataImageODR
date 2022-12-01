@@ -1,5 +1,6 @@
 package org.example;
 
+import com.google.gson.Gson;
 import fileControler.FileControler;
 import fileControler.FileEditor;
 import fileControler.FileExplorer;
@@ -44,7 +45,12 @@ public class Main {
         /*
          * Scan the list of images provided
          */
-        System.out.println(tesseractControler.getDataScanImagesList(imagesPath));
+        //System.out.println(tesseractControler.getDataScanImagesList(imagesPath));
+
+        Gson gson = new Gson();
+        imagesScanResult.put("Mypath/to/thefile.txt","This is my data as text scanned");
+        String json = gson.toJson(imagesScanResult);
+        System.out.println(json);
 
     }
 }
