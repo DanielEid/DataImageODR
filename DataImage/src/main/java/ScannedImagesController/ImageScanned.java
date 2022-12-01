@@ -4,15 +4,19 @@ import java.io.File;
 
 public class ImageScanned {
 
-    public File imageFile;
+    public String imagePath;
     public String dataScanned;
 
-    public File getImageFile() {
-        return imageFile;
+    public String getImageFile() {
+        return imagePath;
     }
 
     public void setImageFile(File imageFile) {
-        this.imageFile = imageFile;
+        this.imagePath = imageFile.getName();
+    }
+
+    public void setImageFile(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getDataScanned() {
@@ -27,14 +31,18 @@ public class ImageScanned {
     }
 
     public ImageScanned(File imageFile, String dataScanned) {
-        this.imageFile = imageFile;
+        this.imagePath = imageFile.getName();
         this.dataScanned = dataScanned;
     }
 
+    public ImageScanned(String imageFile, String dataScanned) {
+        this.imagePath = imageFile;
+        this.dataScanned = dataScanned;
+    }
     @Override
     public String toString() {
         return "ImageScanned{" +
-                "imageFile=" + imageFile +
+                "imagePath=" + imagePath +
                 ", dataScanned='" + dataScanned + '\'' +
                 '}';
     }

@@ -6,7 +6,6 @@ import net.sourceforge.tess4j.TesseractException;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class TesseractControler {
@@ -49,7 +48,7 @@ public class TesseractControler {
      */
     public ImageScanned getDataScanOneImageAsImageScanned(File imagePath) {
         ImageScanned imageScanned = new ImageScanned();
-        imageScanned.setImageFile(imagePath);
+        imageScanned.setImageFile(imagePath.getName());
 
         try {
             imageScanned.setDataScanned(tesseract.doOCR(imagePath));
@@ -63,10 +62,10 @@ public class TesseractControler {
      * Scan and get the text of the list images provided
      * @return a list of ImageScanned wich contains the path of the images and the data scanned for each image
      */
-    public ArrayList<ImageScanned> getDataScanImagesList(List<File> imagesPath) {
+    public List<ImageScanned> getDataScanImagesList(List<File> imagesPath) {
         ArrayList<ImageScanned> imagesScannedList = new ArrayList<>();
 
-        for (int i = 0; /*i<imagesPath.size()*/ i < 2; i++) {                                                  //not foreach loop, I need index
+        for (int i = 0; i<imagesPath.size(); i++) {                                                  //not foreach loop, I need index
             imagesScannedList.add(getDataScanOneImageAsImageScanned(imagesPath.get(i)));
             System.out.println(String.format("%d of %d scanned images", i + 1, imagesPath.size()));
         }

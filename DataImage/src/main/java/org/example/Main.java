@@ -1,6 +1,6 @@
 package org.example;
 
-import com.google.gson.Gson;
+import ScannedImagesController.ImageScanned;
 import fileControler.FileControler;
 import fileControler.FileEditor;
 import fileControler.FileExplorer;
@@ -8,18 +8,11 @@ import ocrControler.TesseractControler;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        /*
-        long startTime = System.currentTimeMillis(); //TIMER START
-        long finishTime = System.currentTimeMillis(); //TIMER END
-        System.out.println("That took: " + (finishTime - startTime) + " ms"); //TIMER OUT
-        */
-
         /*
          * Declaration needed
          */
@@ -28,29 +21,23 @@ public class Main {
         FileEditor fileEditor = new FileEditor();
         FileExplorer fileExplorer = new FileExplorer(filesToBeIndexedPath, Arrays.asList("png", "jpg"));
 
-
         /*
          * Get the file list of images that will be scanned
          */
         List<File> imagesPath = FileControler.getFileListFromFileAsList(new FileEditor(), filePathOfIndexedFilePath);
-
-        /*
-         * List that contains the scan result for each image
-         */
-        HashMap<String, String> imagesScanResult = new HashMap<>();
         /*
          * Creation of the tesseractController
          */
         TesseractControler tesseractControler = new TesseractControler("C:/Users/Daniel/Videos/Captures/tessdata");
         /*
-         * Scan the list of images provided
+         * Scan the list of images provided in a List
          */
-        //System.out.println(tesseractControler.getDataScanImagesList(imagesPath));
+        List<ImageScanned> imagesScanned = tesseractControler.getDataScanImagesList(imagesPath);
+        /*
+         * Save the imagesScanned in a file in json
+         */
+        fileEditor.writeDataAsJson("C:/Users/Daniel/Videos/Captures/ImagesScanned.txt", imagesScanned);
 
-        Gson gson = new Gson();
-        imagesScanResult.put("Mypath/to/thefile.txt","This is my data as text scanned");
-        String json = gson.toJson(imagesScanResult);
-        System.out.println(json);
 
     }
 }

@@ -1,5 +1,7 @@
 package fileControler;
 
+import com.google.gson.Gson;
+
 import java.io.*;
 
 public class FileEditor {
@@ -33,6 +35,16 @@ public class FileEditor {
                 fileData.append(line).append("\n");
             }
             return fileData.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void writeDataAsJson(String pathToSave, Object object){
+
+        Gson gson = new Gson();
+        try {
+            gson.toJson(object, new FileWriter(pathToSave));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
