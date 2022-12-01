@@ -36,8 +36,6 @@ public class Main {
         /*
          * Save the imagesScanned in a file in json
          */
-        fileEditor.writeDataAsJson("C:/Users/Daniel/Videos/Captures/ImagesScanned.txt", imagesScanned);
-
-
+        fileEditor.writeDataAsJson("C:/Users/Daniel/Videos/Captures/ImagesScanned.json", imagesScanned);
     }
 }
