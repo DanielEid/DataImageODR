@@ -37,6 +37,7 @@ public class FileExplorer {
 
     /**
      * Show the path where the app are executed
+     *
      * @return the current path of app
      */
     public String getAppCurrentPath() {
