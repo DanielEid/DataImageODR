@@ -8,7 +8,7 @@ public class FileEditor {
 
     /**
      * @param filePathAndName: Path and name of of the file that will be created (ex: C:/myfile.txt)
-     * @param data: Data  that will be written to the file, type string
+     * @param data:            Data  that will be written to the file, type string
      */
     public void writeStringIntoFile(String filePathAndName, String data) {
         try {
@@ -21,8 +21,7 @@ public class FileEditor {
     }
 
     /**
-     *
-     * @param filePath:  Path of the file that will be readed
+     * @param filePath: Path of the file that will be readed
      * @return the data (type string) of file with line returns
      */
     public String readDataAsStringFile(String filePath) {
@@ -40,7 +39,7 @@ public class FileEditor {
         }
     }
 
-    public void writeDataAsJson(String pathToSave, Object object){
+    public void writeDataAsJson(String pathToSave, Object object) {
 
         Gson gson = new Gson();
         try {

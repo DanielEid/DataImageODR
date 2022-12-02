@@ -48,7 +48,7 @@ public class TesseractControler {
      */
     public ImageScanned getDataScanOneImageAsImageScanned(File imagePath) {
         ImageScanned imageScanned = new ImageScanned();
-        imageScanned.setImageFile(imagePath.getName());
+        imageScanned.setImagePath(imagePath.getPath());
 
         try {
             imageScanned.setDataScanned(tesseract.doOCR(imagePath));
@@ -60,12 +60,13 @@ public class TesseractControler {
 
     /**
      * Scan and get the text of the list images provided
+     *
      * @return a list of ImageScanned wich contains the path of the images and the data scanned for each image
      */
     public List<ImageScanned> getDataScanImagesList(List<File> imagesPath) {
         ArrayList<ImageScanned> imagesScannedList = new ArrayList<>();
 
-        for (int i = 0; i<imagesPath.size(); i++) {                                                  //not foreach loop, I need index
+        for (int i = 0; i < imagesPath.size(); i++) {                                                  //not foreach loop, I need index
             imagesScannedList.add(getDataScanOneImageAsImageScanned(imagesPath.get(i)));
             System.out.println(String.format("%d of %d scanned images", i + 1, imagesPath.size()));
         }
