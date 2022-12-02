@@ -40,7 +40,6 @@ public class FileEditor {
     }
 
     public void writeDataAsJson(String pathToSave, Object object) {
-
         Gson gson = new Gson();
         try {
             gson.toJson(object, new FileWriter(pathToSave));

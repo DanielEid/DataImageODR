@@ -6,7 +6,7 @@ import java.util.List;
 
 public class FileControler {
 
-    public void writeFileListIntoFileAsString(FileExplorer fileExplorer, FileEditor fileEditor, String filePathOfIndexedFilePath) {
+    public static void writeFileListIntoFileAsString(FileExplorer fileExplorer, FileEditor fileEditor, String filePathOfIndexedFilePath) {
         List<File> fileList = fileExplorer.getFilesInDirectories(fileExplorer.getDirectory()); //Save the path of wanted files
         StringBuilder fileListString = new StringBuilder();
         for (int i = 0; i < fileList.size() - 1; i++) { //Transform the list into string, many way tested, this is the more light and not add [] (like toString()
